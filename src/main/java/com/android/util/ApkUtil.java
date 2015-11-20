@@ -34,7 +34,7 @@ public class ApkUtil {
 	}
 
 	public ApkInfo getApkInfo(String apkPath) throws Exception {
-		Process process = mBuilder.command("./aapt", "d", "badging", apkPath)
+		Process process = mBuilder.command("aapt", "d", "badging", apkPath)
 				.start();
 		InputStream is = null;
 		is = process.getInputStream();

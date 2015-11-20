@@ -54,7 +54,7 @@ public class MtesterAutoCompleteField {
     	  }
     	  @Override
     	  public Image getImage(Object element) {
-    		  Image iconCapture = new Image(shell.getDisplay(), "./icons/function.png");
+    		  Image iconCapture = new Image(shell.getDisplay(), ClassLoader.getSystemResource("icons/function.png").getPath());
     		  return iconCapture;  
     	  }
       });

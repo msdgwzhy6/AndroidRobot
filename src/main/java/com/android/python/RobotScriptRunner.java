@@ -153,18 +153,6 @@ public class RobotScriptRunner extends Thread{
 	public void run() {
 		isRunning = true;
 		
-//		if(isSelendroid) {
-//			String apk = PropertiesUtil.getValue("./system.properties", "aut");
-//			try {
-//				if(AndroidDriver.launchSelendroidStandalone(apk, 4444) &&
-//						driver.setup(vecDevices.get(i).getSerialNumber(),isSelendroid))
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//		}
-			
-		
 		//task size
 		for(int i=0;i<this.tasks.size();i++){
 			Task task = this.tasks.get(i);

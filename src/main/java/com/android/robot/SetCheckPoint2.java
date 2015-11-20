@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Hashtable;
+
 import javax.swing.ImageIcon;
 
 import org.eclipse.swt.events.KeyAdapter;
@@ -86,7 +87,8 @@ public class SetCheckPoint2 {
 	
 	private Area loadScreenArea(String pngFile) throws Exception{
 		Area area = null;
-		String xmlArea = "./workspace/" + file.substring(0, file.indexOf("/"))+ "/screen_area.xml";
+		String xmlArea = System.getProperty("user.dir") + 
+				"/workspace/" + file.substring(0, file.indexOf("/"))+ "/screen_area.xml";
 		System.out.println(xmlArea);
 		XmlUtil xmlUtil = new XmlUtil(xmlArea);
 		Document doc = xmlUtil.parse(xmlArea);
@@ -115,7 +117,8 @@ public class SetCheckPoint2 {
 	}
 	
 	private void updateScreenArea(String pngFile, Area area) throws Exception{
-		String xmlArea = "./workspace/" + file.substring(0, file.indexOf("/"))+ "/screen_area.xml";
+		String xmlArea = System.getProperty("user.dir") + 
+				"/workspace/" + file.substring(0, file.indexOf("/"))+ "/screen_area.xml";
 		XmlUtil xmlUtil = new XmlUtil(xmlArea);
 		Document doc = xmlUtil.parse(xmlArea);
 		Element root = doc.getDocumentElement();
@@ -154,7 +157,7 @@ public class SetCheckPoint2 {
             gc.setForeground(new Color(Display.getDefault(), 255, 0, 0));
             setParams(startX, startY, offsetX, offsetY);
             gc.drawRectangle(startX, startY, offsetX, offsetY);  
-            tempImage = new Image(Display.getDefault(), "./temp/temp.png");
+            tempImage = new Image(Display.getDefault(), ClassLoader.getSystemResource("icons/temp.png").getPath());
             gc.copyArea(tempImage, 0, 0);
             imagesList.add(image);
         }  
@@ -192,7 +195,7 @@ public class SetCheckPoint2 {
 	public void canvasDrawImage(GC gc) {
         try {  
         	
-            FileInputStream input = new FileInputStream(new File("./workspace/" + file));
+            FileInputStream input = new FileInputStream(new File(System.getProperty("user.dir") + "/workspace/" + file));
             ImageData imageData = new ImageData(input); 
             image = new Image(Display.getDefault(), imageData);
 

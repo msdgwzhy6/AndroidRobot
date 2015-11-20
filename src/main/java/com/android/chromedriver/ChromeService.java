@@ -9,7 +9,6 @@ public class ChromeService {
 	private static ChromeDriverService service = null;
 	
     public static void startService() throws IOException {
-        System.setProperty("webdriver.chrome.logfile", "./log/chromedriver.log");
         service = new ChromeDriverService.Builder()
                 .usingDriverExecutable(new File("./chromedriver.exe"))
                 .usingAnyFreePort()

@@ -99,7 +99,8 @@ public class SetApkWindow extends Dialog {
 		previous.setText("确定");
 		previous.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-    			PropertiesUtil.append("./system.properties", "aut", textDir.getText().trim(), "Aut");
+    			PropertiesUtil.append(System.getProperty("user.dir") + 
+    					"/system.properties", "aut", textDir.getText().trim(), "Aut");
     			result = "";
 				shell.close();
 				shell.dispose();

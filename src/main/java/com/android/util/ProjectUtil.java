@@ -205,7 +205,7 @@ public class ProjectUtil {
 		try {
             String value = "";
             Properties properties = new Properties();
-            FileInputStream inputFile = new FileInputStream("./system.properties");
+            FileInputStream inputFile = new FileInputStream(System.getProperty("user.dir") + "/system.properties");
             properties.load(inputFile);
             inputFile.close();
             

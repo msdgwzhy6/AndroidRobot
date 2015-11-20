@@ -497,7 +497,6 @@ public class AndroidRobot {
         if (device != null) {
             enableRecord(false);
             isSetCheckPoint = false;
-
             client = new UiAutomatorClient(device.getSerialNumber());
             if (client.connect()) {
                 enableRecordButton(true, true, true, true, true, true);
@@ -506,9 +505,11 @@ public class AndroidRobot {
                 //向手机注入Minicap截图工具
                 String sdk = device.getProperty("ro.build.version.sdk");
                 String abi = device.getProperty("ro.product.cpu.abi");
-                System.out.println(abi + " " + sdk);
-                device.pushFile("./resources/minicap/bin/" + abi + "/minicap", "/data/local/tmp/minicap");
-                device.pushFile("./resources/minicap/shared/android-" + sdk + "/" + abi + "/minicap.so", "/data/local/tmp/minicap.so");
+                device.pushFile(ClassLoader.getSystemResource("plugins/resources/minicap/bin/" + abi + "/minicap").getPath(), 
+                		"/data/local/tmp/minicap");
+                System.out.println(ClassLoader.getSystemResource("plugins/resources/minicap/shared/android-" + sdk + "/" + abi + "/minicap.so").getPath());
+                device.pushFile(ClassLoader.getSystemResource("plugins/resources/minicap/shared/android-" + sdk + "/" + abi + "/minicap.so").getPath(),
+                		"/data/local/tmp/minicap.so");
 
                 CollectingOutputReceiver receiver = new CollectingOutputReceiver();
                 device.executeShellCommand("chmod 777 /data/local/tmp/minicap", receiver);
@@ -882,7 +883,9 @@ public class AndroidRobot {
                 if (event.detail == 0) {
 
                 	   
-                    SetApkWindow newPrj = new SetApkWindow(shell, SWT.CLOSE, PropertiesUtil.getValue("./system.properties", "aut"));
+                    SetApkWindow newPrj = 
+                    		new SetApkWindow(shell, SWT.CLOSE, PropertiesUtil.getValue(System.getProperty("user.dir") + 
+                    		"/system.properties", "aut"));
                     String choice = newPrj.open();
 
                     if (choice != null && !choice.equals(""))
@@ -4859,8 +4862,6 @@ public class AndroidRobot {
             String fileName = currTabItem.getText();
             if (fileName.contains("*")) {
                 fileName = fileName.substring(1, fileName.length());
-                //String path = "./workspace/"+htTab.get(getCurrentTab().getData(fileName))+"/Scripts/"+fileName;
-                //String path = "./workspace/"+((String)getCurrentTab().getData(fileName)).substring(0,((String)getCurrentTab().getData(fileName)).indexOf("\\"))+"/Scripts/"+fileName;
                 String path = (String) getCurrentTab().getData(fileName);
 
                 StyledText text = (StyledText) getCurrentTab().getControl();
@@ -5019,8 +5020,10 @@ public class AndroidRobot {
                 //connect to device
                 if (vecDevices.size() <= 0)
                     return false;
-                String apk = PropertiesUtil.getValue("./system.properties", "aut");
-                String str_sele = PropertiesUtil.getValue("./system.properties", "isSelendroid");
+                String apk = PropertiesUtil.getValue(System.getProperty("user.dir") + 
+                		"/system.properties", "aut");
+                String str_sele = PropertiesUtil.getValue(System.getProperty("user.dir") + 
+                		"/system.properties", "isSelendroid");
 
                 if (!str_sele.trim().equals("") && (str_sele.trim().toLowerCase().equals("false") || str_sele.trim().toLowerCase().equals("true")))
                     isSelendroid = Boolean.parseBoolean(str_sele);
@@ -5092,14 +5095,14 @@ public class AndroidRobot {
         if (!src.equals(dest)) {
 
             if (ti.getParentItem() == null) {
-                old = new File("./workspace/" + src);
-                newFile = new File("./workspace/" + dest);
+                old = new File(System.getProperty("user.dir") + "/workspace/" + src);
+                newFile = new File(System.getProperty("user.dir") + "/workspace/" + dest);
             } else {
                 String path = RobotTreeUtil.getPathFromTree(ti.getParentItem());
                 ti.setText(dest);
 
-                old = new File("./workspace/" + path + "/" + src);
-                newFile = new File("./workspace/" + path + "/" + dest);
+                old = new File(System.getProperty("user.dir") + "/workspace/" + path + "/" + src);
+                newFile = new File(System.getProperty("user.dir") + "/workspace/" + path + "/" + dest);
             }
 
             old.renameTo(newFile);
@@ -5214,7 +5217,8 @@ public class AndroidRobot {
 
         //load current project
         loadProjects();
-        PropertyConfigurator.configure("./log4j.properties");
+        PropertyConfigurator.configure(System.getProperty("user.dir") + 
+        		"/log4j.properties");
         shell.open();
         shell.layout();
         sp.closeSplashWindow();

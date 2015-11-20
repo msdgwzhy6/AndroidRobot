@@ -207,7 +207,8 @@ public class AndroidDriver extends PyObject implements ClassDictInit{
 	
 	public boolean setup(final String serial,boolean isSelendroid) throws Exception {
 		if(!this.apkPath.trim().equals("")) {
-			String isForceInstall = PropertiesUtil.getValue("./system.properties", "isForceInstall");
+			String isForceInstall = PropertiesUtil.getValue(System.getProperty("user.dir") + 
+					"/system.properties", "isForceInstall");
 			
 			if(!isForceInstall.trim().toLowerCase().equals("true")) {
 				return true;
@@ -1023,11 +1024,13 @@ public class AndroidDriver extends PyObject implements ClassDictInit{
 		
 		this.refreshProgressData();
 		try {
-			String screen = this.uiAutomatorClient.takeSnapshot("./temp/", "screen.png");
+			String screen = this.uiAutomatorClient.takeSnapshot(System.getProperty("user.dir") + 
+					"/temp/", "screen.png");
 			
 			String trimFilePath = StringUtil.trim(filePath);
 			String project = trimFilePath.substring(0, trimFilePath.indexOf("/"));
-			Area area = AreaLoader.load("./workspace/" + project + "/screen_area.xml",trimFilePath);
+			Area area = AreaLoader.load(System.getProperty("user.dir") + 
+					"/workspace/" + project + "/screen_area.xml",trimFilePath);
 			
 			return new ImageUtil(filePath, screen, rate).compare(area.getX(), area.getY(), area.getWidth(), area.getHeight());
 		} catch (Exception e) {

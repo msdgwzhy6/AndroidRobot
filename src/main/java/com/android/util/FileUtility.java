@@ -71,7 +71,7 @@ public class FileUtility {
 										String fileName,
 										String content) throws FileNotFoundException{
 		fileName = fileName.substring(1,fileName.length());
-		String path = "./workspace/"+projectName.substring(0,projectName.indexOf("\\"))+"/Scripts/"+fileName;
+		String path = System.getProperty("user.dir") + "/workspace/"+projectName.substring(0,projectName.indexOf("\\"))+"/Scripts/"+fileName;
 		writeFile(path,content,false);
 	}
 	

@@ -62,7 +62,8 @@ public class TaskUtil {
 	}
 	
 	public static void updateTask(Task task) throws Exception {
-		String xmlTasks = "./workspace/" + task.solution + "/tasks_database.xml";
+		String xmlTasks = System.getProperty("user.dir") + 
+				"/workspace/" + task.solution + "/tasks_database.xml";
 		XmlUtil xml = new XmlUtil(xmlTasks);
 		Document doc = xml.parse(xmlTasks);
 		Element root = doc.getDocumentElement();
