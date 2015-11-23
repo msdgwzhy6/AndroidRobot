@@ -469,18 +469,6 @@ public class AndroidRobot {
 
     }
 
-    /**
-     * 根据dump返回值分析出屏幕分辨率
-     */
-    private static String getSize(String receiver) {
-        if (receiver != null) {
-            int index = receiver.indexOf("init=");
-            int end = receiver.indexOf(" ", index);
-            return receiver.substring(index + 5, end);
-        }
-        return "";
-    }
-
     private static LaunchMinicap minicap = null;
 
     /**
@@ -516,15 +504,7 @@ public class AndroidRobot {
                 device.executeShellCommand("chmod 777 /data/local/tmp/minicap.so", receiver);
                 device.executeShellCommand("dumpsys window displays", receiver);
 
-                String size = getSize(receiver.getOutput());
-                int width = 0;
-                int height = 0;
-                if (!size.equals("")) {
-                    width = Integer.parseInt(size.substring(0, size.indexOf("x")));
-                    height = Integer.parseInt(size.substring(size.indexOf("x") + 1, size.length()));
-                }
-
-                minicap = new LaunchMinicap(device.getSerialNumber(), width, height, width, height, 0);
+                minicap = new LaunchMinicap(device.getSerialNumber(), mWidth, mHeight, mWidth, mHeight, 0);
                 Thread thread = new Thread(minicap);
                 thread.start();
                 thread.join(10000);
