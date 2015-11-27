@@ -163,18 +163,15 @@ public class RobotTreeUtil {
 		Vector<String> vecFiles = new Vector<String>();
 		TreeItem[] tiRoot = tree.getItems();
 		for(int i = 0;i<tiRoot.length;i++){
-			//System.out.println("Tree Item:"+tiRoot[i].getText());
 			if(tiRoot[i].getText().equals(prj))
 				if(tiRoot[i].getChecked() == true){
-					//System.out.println("Checked:"+tiRoot[i].getChecked());
 					//Scripts
 					TreeItem tiScript = tiRoot[i].getItems()[2];
 					TreeItem[] tiCases = tiScript.getItems();
 					for(int j =0;j<tiCases.length;j++)
 						if(tiCases[j].getChecked()){
-							String project = tiRoot[i].getText();
-							//System.out.println("Checked:"+tiCases[j].getText());
-							vecFiles.add(".\\workspace\\"+tiRoot[i].getText()+"\\Scripts\\"+tiCases[j].getText());
+							vecFiles.add(System.getProperty("user.dir") + 
+									"/workspace/"+tiRoot[i].getText()+"/Scripts/"+tiCases[j].getText());
 						}
 				}else
 					break;

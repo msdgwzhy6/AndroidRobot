@@ -57,12 +57,12 @@
             <artifactId>log4j</artifactId>
             <version>1.2.17</version>
         </dependency>
-        <dependency>
-            <groupId>org.python</groupId>
-            <artifactId>jython</artifactId>
-            <version>2.7.0</version>
-        </dependency>
 
+	<dependency> 
+    	<groupId>xml-apis</groupId>
+    	<artifactId>xml-apis</artifactId>
+    	<version>1.4.01</version>
+	</dependency>
 
         <dependency>
             <groupId>org.hamcrest</groupId>
@@ -159,6 +159,12 @@
             <artifactId>text</artifactId>
             <version>3.3.0-v20070606-0010</version>
         </dependency>
+
+		<dependency>
+			<groupId>org.python</groupId>
+			<artifactId>jython-standalone</artifactId>
+			<version>2.7.0</version>
+		</dependency>
 
 
         <dependency>

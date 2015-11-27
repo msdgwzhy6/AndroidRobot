@@ -45,7 +45,7 @@ public class TaskUtil {
 	public static void getScripts(File project,Vector<String> scripts) throws IOException{
 		if(project != null && project.isFile()){
 			String canonicalPath = project.getCanonicalPath();
-			int index = canonicalPath.lastIndexOf("\\workspace\\");
+			int index = canonicalPath.lastIndexOf("/workspace/");
 			String relativePath = "."+canonicalPath.substring(index,canonicalPath.length());
 			//scripts.add(project.getCanonicalPath());
 			scripts.add(relativePath);

@@ -17,15 +17,6 @@ import org.apache.commons.compress.archivers.zip.ZipFile;
 import org.apache.commons.compress.utils.IOUtils;
 public class ZipUtil {
 
-	public static void main(String[] args) {
-		try {
-			new ZipUtil().compress(new File("D:\\svn-server\\webserver\\branches\\QuickTesterAgent3\\workspace\\Alipay_Auto\\Logs\\cfec0c6e_20150519162834"), new File("D:\\svn-server\\webserver\\branches\\QuickTesterAgent3\\workspace\\Alipay_Auto\\Logs\\log.zip"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
 	public void compress(File[] files, File zipFile) throws IOException {
 		if (files == null) {
 			return;

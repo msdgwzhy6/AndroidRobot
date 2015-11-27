@@ -353,23 +353,6 @@ public class AndroidRobot {
             insertScript("device[" + deviceIndex + "].swipe(" + down_x + "," + down_y + "," + up_x + "," + up_y + ")");
             client.swipe(down_x, down_y, up_x, up_y, 20);
         }
-
-//		if (isLongTouchMoveEvent == true){
-//			//addAction(new LongTouchMoveAction(down_x,down_y,up_x,up_y));
-//			System.out.println("LongTouchMove");
-//		} else if(startMoveTime > startMotionTime) {
-//			//addAction(new MoveAction(down_x,down_y,up_x,up_y));
-//			System.out.println("MoveAction");
-//		}
-//
-//
-//		if(((double)(endMotionTime-startMotionTime)/1000) < 0.5){
-//			if (isMoveEvent == false)
-//				recordScript("device["+deviceIndex+"].touch("+x+","+y+")");
-//		}else if(((double)(endMotionTime-startMotionTime)/1000) >= 0.5 && ((down_x == up_x) && (down_y == up_y))){
-//			recordScript("device["+deviceIndex+"].longTouch("+x+","+y+")");
-//		}
-
         moveCount = 0;
         isMoveEvent = false;
         isLongTouchMoveEvent = false;
@@ -426,11 +409,11 @@ public class AndroidRobot {
         dialog.setFilterNames(new String[]{"png Files (*.png)"});
         dialog.setFilterExtensions(new String[]{"*.png*"}); //Windows wild cards
 
-        dialog.setFilterPath(".\\workspace");
+        dialog.setFilterPath(System.getProperty("user.dir") + "/workspace");
         String choice = dialog.open();
 
         if (choice != null && !choice.trim().equals("")) {
-            curPicturePath = choice.substring(0, choice.lastIndexOf("\\"));
+            curPicturePath = choice.substring(0, choice.lastIndexOf("/"));
             try {
                 if (!choice.trim().endsWith(".png"))
                     choice += ".png";
@@ -861,8 +844,6 @@ public class AndroidRobot {
         itemSetApk.addListener(SWT.Selection, new Listener() {
             public void handleEvent(Event event) {
                 if (event.detail == 0) {
-
-                	   
                     SetApkWindow newPrj = 
                     		new SetApkWindow(shell, SWT.CLOSE, PropertiesUtil.getValue(System.getProperty("user.dir") + 
                     		"/system.properties", "aut"));
@@ -1415,7 +1396,7 @@ public class AndroidRobot {
         FileDialog dialog = new FileDialog(shell, SWT.OPEN);
         dialog.setFilterNames(new String[]{"Log Files (*.arlog)"});
         dialog.setFilterExtensions(new String[]{"*.arlog*"}); //Windows wild cards
-        dialog.setFilterPath(".\\workspace"); //Windows path
+        dialog.setFilterPath(System.getProperty("user.dir") + "/workspace"); //Windows path
         String choice = dialog.open();//return value: path & null
         if (choice != null) {
             LogAnalysis logAnalysis = new LogAnalysis(shell, choice);
@@ -1428,7 +1409,7 @@ public class AndroidRobot {
         FileDialog dialog = new FileDialog(shell, SWT.OPEN);
         dialog.setFilterNames(new String[]{"Project Files (*.androidrobot)"});
         dialog.setFilterExtensions(new String[]{"*.androidrobot*"}); //Windows wild cards
-        dialog.setFilterPath(".\\workspace"); //Windows path
+        dialog.setFilterPath(System.getProperty("user.dir") + "/workspace"); //Windows path
         String choice = dialog.open();
         if (choice != null) {
             openProject(choice);
@@ -2462,7 +2443,8 @@ public class AndroidRobot {
                         comboSolution.select(j);
 
                         //load project in folder
-                        scriptPath = ".\\workspace\\" + comboSolution.getText().trim() + "\\Scripts\\";
+                        scriptPath = System.getProperty("user.dir") + 
+                        		"/workspace/" + comboSolution.getText().trim() + "/Scripts/";
                         loadProjectInTaskTab(scriptPath, comboProject);
 
                         isFind = true;
@@ -2479,7 +2461,7 @@ public class AndroidRobot {
                     if (comboProject.getItem(j).equals(task.project)) {
                         comboProject.select(j);
 
-                        scriptPath = scriptPath + comboProject.getText().trim() + "\\";
+                        scriptPath = scriptPath + comboProject.getText().trim() + "/";
                         loadItemInTaskTab(scriptPath, comboItem);
 
                         isFind = true;
@@ -2495,7 +2477,7 @@ public class AndroidRobot {
                 for (int j = 0; j < itemSize; j++) {
                     if (comboItem.getItem(j).equals(task.item)) {
                         comboItem.select(j);
-                        scriptPath = scriptPath + comboItem.getText().trim() + "\\";
+                        scriptPath = scriptPath + comboItem.getText().trim() + "/";
                         isFind = true;
                         break;
                     }
@@ -2507,6 +2489,8 @@ public class AndroidRobot {
                 Vector<String> vecBaseScripts = new Vector();
                 try {
                     //Scripts from disk
+                	System.out.println("scriptPath:" + scriptPath + "   " + new File(scriptPath));
+                	
                     FileUtility.getScripts(new File(scriptPath), vecBaseScripts);
 
                     //add from task.dat
@@ -3788,7 +3772,7 @@ public class AndroidRobot {
                 FileUtility.loadScriptsByProject(root, display, projectPath);
                 FileUtility.loadScriptsByLibrary(root, display, projectPath);
 
-                File xmlPath = new File(projectPath + "\\tasks_database.xml");
+                File xmlPath = new File(projectPath + "/tasks_database.xml");
                 //load task
                 taskFilePath = xmlPath.getCanonicalPath();
 
@@ -4901,33 +4885,6 @@ public class AndroidRobot {
             setButton(false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false);
     }
 
-
-    private static Vector<String> downloadScript(String local, ArrayList<String> scriptsList) {
-        Vector<String> vec = new Vector();
-        FtpUtil ftp = new FtpUtil(ServerUtil.getServerIp(), 21, ServerUtil.getFtpUser(), ServerUtil.getFtpPwd());
-        if (null != scriptsList && ftp.ftpLogin()) {
-            for (int i = 0; i < scriptsList.size(); i++) {
-                boolean ret =
-                        ftp.downloadFile(new File(scriptsList.get(i)).getName(), local, new File(scriptsList.get(i)).getParent());
-                if (ret)
-                    vec.add(local + "/" + new File(scriptsList.get(i)).getName());
-            }
-        }
-        ftp.ftpLogOut();
-        return vec;
-    }
-
-    private static boolean downloadApk(String local, String apk) {
-        boolean ret = false;
-        FtpUtil ftp = new FtpUtil(ServerUtil.getServerIp(), 21, ServerUtil.getFtpUser(), ServerUtil.getFtpPwd());
-        if (ftp.ftpLogin()) {
-            ret = ftp.downloadFile(new File(apk).getName(), local, new File(apk).getParent());
-        }
-        ftp.ftpLogOut();
-
-        return ret;
-    }
-
     public static synchronized ArrayList<IDevice> getDevices(ArrayList<String> devicesList) {
         ArrayList<IDevice> tempList = new ArrayList();
         IDevice[] devices = findDevices.getDevices();
@@ -4986,17 +4943,12 @@ public class AndroidRobot {
                     listTasks.add(ti.getText(0));
                 }
             }
-
+           
             Vector<Task> tasks = TaskUtil.getCheckedTasks(taskFilePath, listTasks);
             if (tasks.size() <= 0)
                 return false;
 
             try {
-                //add library
-                PySystemState sys = Py.getSystemState();
-                sys.path.add(projectPath + "/Library");
-                sys.path.add("./lib/selenium-server-standalone-2.45.0.jar");
-
                 //connect to device
                 if (vecDevices.size() <= 0)
                     return false;
@@ -5007,7 +4959,7 @@ public class AndroidRobot {
 
                 if (!str_sele.trim().equals("") && (str_sele.trim().toLowerCase().equals("false") || str_sele.trim().toLowerCase().equals("true")))
                     isSelendroid = Boolean.parseBoolean(str_sele);
-
+                
                 for (int i = 0; i < vecDevices.size(); i++) {
                     AndroidDriver driver = new AndroidDriver(apk, vecDevices.get(i).getSerialNumber(), isSelendroid, projectPath);
                     if (driver.connect()) {
@@ -5039,6 +4991,7 @@ public class AndroidRobot {
                 }
 
             } catch (Exception ex) {
+            	ex.printStackTrace();
                 stop(false);
                 String exception = ex.getMessage();
                 showNotification(exception, SWT.ICON_WARNING | SWT.YES);

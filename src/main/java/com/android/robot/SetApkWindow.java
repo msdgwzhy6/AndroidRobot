@@ -140,7 +140,7 @@ public class SetApkWindow extends Dialog {
 		shell = new Shell(getParent(), getStyle());
 		shell.setSize(450, 300);
 		shell.setText(getText());
-		shell.setImage(SWTResourceManager.getImage(".\\icons\\title.png"));
+		shell.setImage(SWTResourceManager.getImage(ClassLoader.getSystemResource("icons/title.png").getPath()));
 		shell.setLayout(new GridLayout(1,false));
 		display = getParent().getDisplay();
 	}

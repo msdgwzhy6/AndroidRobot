@@ -17,7 +17,7 @@ public class StartUiAutomatorServer implements Runnable{
 	@Override
 	public void run() {
 		//将UiAutomatorHarbour注入手机
-		String shell = "adb -s " + sn + " push UiAutomatorHarbour.jar /data/local/tmp";
+		String shell = "adb -s " + sn + " push " + System.getProperty("user.dir") + "/UiAutomatorHarbour.jar /data/local/tmp";
 		String forward = "adb -s "+ sn + " forward tcp:"+port+" tcp:"+port;
 		String pushFile = "adb -s " + sn + " shell \"echo port=" + port+ " > /data/local/tmp/UiAutomatorHarbour.prop\"";
 		String query_uiautomator  = "adb -s " + sn + " shell ps uiautomator";

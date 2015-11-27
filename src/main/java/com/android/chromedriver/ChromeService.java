@@ -10,7 +10,6 @@ public class ChromeService {
 	
     public static void startService() throws IOException {
         service = new ChromeDriverService.Builder()
-                .usingDriverExecutable(new File("./chromedriver.exe"))
                 .usingAnyFreePort()
                 .build();
         service.start();

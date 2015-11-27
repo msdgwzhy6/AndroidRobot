@@ -97,44 +97,5 @@ public class XmlUtil {
 		
 		return node.getDocumentElement().appendChild(element);
 	}
-	
-	public static void main(String[] args) {
-		XmlUtil xml = new XmlUtil("D:\\Hezheng_TCT\\opensource\\AndroidRobot_Spider2\\screen_area.xml");
-		try {
-			
-			Document doc = 
-					xml.parse("D:\\Hezheng_TCT\\opensource\\AndroidRobot_Spider2\\screen_area.xml");
-			Element root = 
-					doc.getDocumentElement();
-						
-			NodeList childs = root.getChildNodes();
-	        if(childs!=null){
-	        	for(int i=0;i<childs.getLength();i++){
-	        		Node project = childs.item(i);
-	        		if(project.getNodeType()==Node.ELEMENT_NODE){
-	        			String strProject = project.getNodeName();
-	        			NamedNodeMap map = project.getAttributes();
-	        			System.out.println(map.getNamedItem("file").getNodeValue());
-	        			if("d:\\fsaf\\fda\\33223.png".equals(map.getNamedItem("file").getNodeValue())){
-	        				System.out.println("true");
-	        				root.removeChild(project);
-	        			}
-	        		}
-	        	}
-	        	
-	        }
-//	        Hashtable<String,String> attri = new Hashtable();
-//	        attri.put("file", "d:\\fsaf\\fda\\445642.png");
-//	        attri.put("startX", "1433");
-//	        
-//	        xml.appendNode(root.getOwnerDocument(), "area", "", attri);
-//	        
-//	        xml.flush(doc);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
 }
 

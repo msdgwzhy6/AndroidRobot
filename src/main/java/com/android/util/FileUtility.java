@@ -71,7 +71,7 @@ public class FileUtility {
 										String fileName,
 										String content) throws FileNotFoundException{
 		fileName = fileName.substring(1,fileName.length());
-		String path = System.getProperty("user.dir") + "/workspace/"+projectName.substring(0,projectName.indexOf("\\"))+"/Scripts/"+fileName;
+		String path = System.getProperty("user.dir") + "/workspace/"+projectName.substring(0,projectName.indexOf(System.getProperty("file.separator")))+"/Scripts/"+fileName;
 		writeFile(path,content,false);
 	}
 	
@@ -104,7 +104,7 @@ public class FileUtility {
 	public static void getScripts(File project,Vector<String> scripts) throws IOException{
 		if(project != null && project.isFile()){
 			String canonicalPath = project.getCanonicalPath();
-			int index = canonicalPath.lastIndexOf("\\workspace\\");
+			int index = canonicalPath.lastIndexOf(System.getProperty("file.separator") + "workspace" + System.getProperty("file.separator"));
 			String relativePath = "."+canonicalPath.substring(index,canonicalPath.length());
 			//scripts.add(project.getCanonicalPath());
 			scripts.add(relativePath);
@@ -118,21 +118,22 @@ public class FileUtility {
 
 	
 	public static void loadOthersByProject(TreeItem root,Display display){
-		File fileScript = new File(".\\workspace\\"+root.getText());
+		File fileScript = new File(System.getProperty("user.dir") + 
+				"/workspace/"+root.getText());
 		File[] fileScripts = fileScript.listFiles();
 		for(int i=0;i<fileScripts.length;i++){
 			if(fileScripts[i] != null && !fileScripts[i].isDirectory()){
 				//System.out.println(f.getName());
 				TreeItem folder = new TreeItem(root, SWT.NONE);
 				folder.setText(fileScripts[i].getName());
-				folder.setImage(new Image(display, ".\\icons\\unknow.png"));
+				folder.setImage(new Image(display, ClassLoader.getSystemResource("icons/unknow.png").getPath()));
 			}
 		}
 		
 	}
 	
 	public static void loadLogsByProject(TreeItem root,Display display,String path){
-		File fileScript = new File(path+"\\Logs");
+		File fileScript = new File(path+"/Logs");
 		
 		if(fileScript != null && fileScript.isDirectory()){
 			//System.out.println(fileScript.getName());
@@ -165,12 +166,12 @@ public class FileUtility {
 			else if(f.getName().endsWith(".arlog"))
 				folder.setImage(new Image(display, ClassLoader.getSystemResource("icons/log.png").getPath()));
 			else
-				folder.setImage(new Image(display, ClassLoader.getSystemResource("icons/unkown.png").getPath()));
+				folder.setImage(new Image(display, ClassLoader.getSystemResource("icons/unknow.png").getPath()));
 		}
 	}
 	
 	public static void loadPicturesByProject(TreeItem root,Display display,String path){
-		File fileScript = new File(path+"\\Pictures");
+		File fileScript = new File(path+"/Pictures");
 		
 		if(fileScript != null && fileScript.isDirectory()){
 			//System.out.println(fileScript.getName());
@@ -180,7 +181,7 @@ public class FileUtility {
 	}
 	
 	public static void loadScriptsByProject(TreeItem root,Display display,String path){
-		File fileScript = new File(path+"\\Scripts");
+		File fileScript = new File(path+"/Scripts");
 		
 		if(fileScript != null && fileScript.isDirectory()){
 			//System.out.println(fileScript.getName());
@@ -190,7 +191,7 @@ public class FileUtility {
 	}
 	
 	public static void loadScriptsByLibrary(TreeItem root,Display display,String path){
-		File fileScript = new File(path+"\\Library");
+		File fileScript = new File(path+"/Library");
 		
 		if(fileScript != null && fileScript.isDirectory()){
 			//System.out.println(fileScript.getName());

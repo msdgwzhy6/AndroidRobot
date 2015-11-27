@@ -32,6 +32,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
+
 import com.android.util.TimeUtil;
 
 
@@ -179,21 +180,21 @@ public class Log {
 	        			//root
 	        			taskRoot = new TreeItem(treeLog, SWT.NONE);
 	        			taskRoot.setText("测试任务:"+logInfo.task.trim());//
-	        			taskRoot.setImage(new Image(display, ".\\icons\\task.png"));
+	        			taskRoot.setImage(new Image(display, ClassLoader.getSystemResource("icons/task.png").getPath()));
 	        			taskRoot.setData("index",0);
 	        			taskRoot.setData("task",logInfo.task);
 	        			
 	        			//case: Task 1
 	        			column_1 = new TreeItem(taskRoot, SWT.NONE);
 	        			column_1.setText("第 " + (++taskCount)+"轮测试");
-	        			column_1.setImage(new Image(display, ".\\icons\\passed.png"));
+	        			column_1.setImage(new Image(display, ClassLoader.getSystemResource("icons/passed.png").getPath()));
 	        			column_1.setData("index",taskCount);
 	        			column_1.setData("task",logInfo.task);
 	        			
 	        			//case
 	        			colRoot = new TreeItem(column_1, SWT.NONE);
 	        			colRoot.setText(logInfo.name.trim());//
-	        			colRoot.setImage(new Image(display, ".\\icons\\passed.png"));
+	        			colRoot.setImage(new Image(display, ClassLoader.getSystemResource("icons/passed.png").getPath()));
 	        			colRoot.setData("index",0);
 	        			colRoot.setData("task",logInfo.task);
 	        			colRoot.setData("case",logInfo.name);
@@ -208,12 +209,12 @@ public class Log {
 	        			
 	        			if(logInfo.result == NGOK.OK){
 	        				iPass +=1;
-	        				column_2.setImage(new Image(display, ".\\icons\\passed.png"));
+	        				column_2.setImage(new Image(display, ClassLoader.getSystemResource("icons/passed.png").getPath()));
 		        		}else{
 		        			iFail+=1;
-		        			column_1.setImage(new Image(display, ".\\icons\\failed.png"));
-		        			column_2.setImage(new Image(display, ".\\icons\\failed.png"));
-		        			colRoot.setImage(new Image(display, ".\\icons\\failed.png"));
+		        			column_1.setImage(new Image(display, ClassLoader.getSystemResource("icons/failed.png").getPath()));
+		        			column_2.setImage(new Image(display, ClassLoader.getSystemResource("icons/failed.png").getPath()));
+		        			colRoot.setImage(new Image(display, ClassLoader.getSystemResource("icons/failed.png").getPath()));
 		        		}
 	        			
 	        		}else{
@@ -230,12 +231,12 @@ public class Log {
 	    	        			
 	    	        			if(logInfo.result == NGOK.OK){
 	    	        				iPass +=1;
-	    	        				column_x.setImage(new Image(display, ".\\icons\\passed.png"));
+	    	        				column_x.setImage(new Image(display, ClassLoader.getSystemResource("icons/passed.png").getPath()));
 	    		        		}else{
 	    		        			iFail+=1;
-	    		        			column_1.setImage(new Image(display, ".\\icons\\failed.png"));
-	    		        			column_x.setImage(new Image(display, ".\\icons\\failed.png"));
-	    		        			colRoot.setImage(new Image(display, ".\\icons\\failed.png"));
+	    		        			column_1.setImage(new Image(display, ClassLoader.getSystemResource("icons/failed.png").getPath()));
+	    		        			column_x.setImage(new Image(display, ClassLoader.getSystemResource("icons/failed.png").getPath()));
+	    		        			colRoot.setImage(new Image(display, ClassLoader.getSystemResource("icons/failed.png").getPath()));
 	    		        		}
 	        				}else{
 	        					//case: Run 1
@@ -244,7 +245,7 @@ public class Log {
 	        					//case
 	    	        			colRoot = new TreeItem(column_1, SWT.NONE);
 	    	        			colRoot.setText(logInfo.name.trim());//
-	    	        			colRoot.setImage(new Image(display, ".\\icons\\passed.png"));
+	    	        			colRoot.setImage(new Image(display, ClassLoader.getSystemResource("icons/passed.png").getPath()));
 	    	        			colRoot.setData("index",0);
 	    	        			colRoot.setData("task",logInfo.task);
 	    	        			colRoot.setData("case",logInfo.name);
@@ -258,12 +259,12 @@ public class Log {
 	    	        			
 	    	        			if(logInfo.result == NGOK.OK){
 	    	        				iPass +=1;
-	    	        				column_2.setImage(new Image(display, ".\\icons\\passed.png"));
+	    	        				column_2.setImage(new Image(display, ClassLoader.getSystemResource("icons/passed.png").getPath()));
 	    		        		}else{
 	    		        			iFail+=1;
-	    		        			column_1.setImage(new Image(display, ".\\icons\\failed.png"));
-	    		        			column_2.setImage(new Image(display, ".\\icons\\failed.png"));
-	    		        			colRoot.setImage(new Image(display, ".\\icons\\failed.png"));
+	    		        			column_1.setImage(new Image(display, ClassLoader.getSystemResource("icons/failed.png").getPath()));
+	    		        			column_2.setImage(new Image(display, ClassLoader.getSystemResource("icons/failed.png").getPath()));
+	    		        			colRoot.setImage(new Image(display, ClassLoader.getSystemResource("icons/failed.png").getPath()));
 	    		        		}
 	        				}
 	        			}else{
@@ -273,14 +274,14 @@ public class Log {
 		        			//case: Task 1
 		        			column_1 = new TreeItem(taskRoot, SWT.NONE);
 		        			column_1.setText("第 " + (++taskCount)+"轮测试");
-		        			column_1.setImage(new Image(display, ".\\icons\\passed.png"));
+		        			column_1.setImage(new Image(display, ClassLoader.getSystemResource("icons/passed.png").getPath()));
 		        			column_1.setData("index",taskCount);
 		        			column_1.setData("task",logInfo.task);
 		        			
 		        			//case
 		        			colRoot = new TreeItem(column_1, SWT.NONE);
 		        			colRoot.setText(logInfo.name.trim());//
-		        			colRoot.setImage(new Image(display, ".\\icons\\passed.png"));
+		        			colRoot.setImage(new Image(display, ClassLoader.getSystemResource("icons/passed.png").getPath()));
 		        			colRoot.setData("index",0);
 		        			colRoot.setData("task",logInfo.task);
 		        			colRoot.setData("case",logInfo.name);
@@ -295,12 +296,12 @@ public class Log {
 		        			
 		        			if(logInfo.result == NGOK.OK){
 		        				iPass +=1;
-		        				column_2.setImage(new Image(display, ".\\icons\\passed.png"));
+		        				column_2.setImage(new Image(display, ClassLoader.getSystemResource("icons/passed.png").getPath()));
 			        		}else{
 			        			iFail+=1;
-			        			column_1.setImage(new Image(display, ".\\icons\\failed.png"));
-			        			column_2.setImage(new Image(display, ".\\icons\\failed.png"));
-			        			colRoot.setImage(new Image(display, ".\\icons\\failed.png"));
+			        			column_1.setImage(new Image(display, ClassLoader.getSystemResource("icons/failed.png").getPath()));
+			        			column_2.setImage(new Image(display, ClassLoader.getSystemResource("icons/failed.png").getPath()));
+			        			colRoot.setImage(new Image(display, ClassLoader.getSystemResource("icons/failed.png").getPath()));
 			        		}
 	        			}
 	        		}

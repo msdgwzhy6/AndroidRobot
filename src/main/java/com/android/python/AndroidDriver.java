@@ -201,6 +201,7 @@ public class AndroidDriver extends PyObject implements ClassDictInit{
 	 */
 	public void runBeforeInstall(){
 		mInWatcherContext = true;
+		System.out.println(this.projectPath + "/Library/Install.py");
 		executePython(this.projectPath + "/Library/Install.py", "watcher");
 		mInWatcherContext = false;
 	}
@@ -209,7 +210,6 @@ public class AndroidDriver extends PyObject implements ClassDictInit{
 		if(!this.apkPath.trim().equals("")) {
 			String isForceInstall = PropertiesUtil.getValue(System.getProperty("user.dir") + 
 					"/system.properties", "isForceInstall");
-			
 			if(!isForceInstall.trim().toLowerCase().equals("true")) {
 				return true;
 			}
@@ -220,10 +220,11 @@ public class AndroidDriver extends PyObject implements ClassDictInit{
 				Thread preinstall = new Thread(new Runnable(){
 					@Override
 					public void run() {
+						System.out.println("============1121==============");
 						runBeforeInstall();
 					}});
 				preinstall.start();
-					
+				System.out.println("============3==============");
 				if(isSelendroid && this.sdk_version < 17)
 					bRet = this.uiSelendroidClient.
 						setup(serial, this.pkg_name, this.act_name, this.apk_version);
@@ -260,15 +261,10 @@ public class AndroidDriver extends PyObject implements ClassDictInit{
 	public boolean install() throws Exception{
 		boolean ret = true;
 		ApkInfo apkInfo = new ApkUtil().getApkInfo(this.apkPath);
-		String getAppVersionCode = "cmd /c adb -s " + sn + " shell dumpsys package " + apkInfo.getPackageName() + " | findstr versionCode";
-		String d_versionCode = AdbUtil.send(getAppVersionCode, 5000);
-		
-		String getAppVersionName = "cmd /c adb -s " + sn + " shell dumpsys package " + apkInfo.getPackageName() + " | findstr versionName";
-		String d_versionName = AdbUtil.send(getAppVersionName, 5000);
-		
 		unInstall(apkInfo.getPackageName());
 		
 		String adbShell = "adb -s " + sn + " install -r " + this.apkPath;
+		System.out.println(adbShell);
 		String result = AdbUtil.send(adbShell, 60000);
 		ret = result.trim().contains("Success");
 		Logger.getLogger(AndroidDriver.class).info("[" + sn +"] 安装[" + this.apkPath + "] ret=" + ret);

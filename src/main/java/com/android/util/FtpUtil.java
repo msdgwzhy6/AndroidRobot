@@ -301,16 +301,5 @@ public class FtpUtil {
     public void setFtpClient(FTPClient ftpClient) {
         this.ftpClient = ftpClient;
     }
-
-    public static void main(String[] args) throws IOException {
-        FtpUtil ftp = new FtpUtil("10.33.32.112", 21, "catm", "123456");
-        ftp.ftpLogin();
-        //上传文件夹
-//        ftp.uploadFile(new File("d:/123345.png"), "/");
-        //ftp.createDir("abc/789/123");
-        //下载文件夹
-        ftp.uploadDirectory("D:\\svn-server\\webserver\\branches\\QuickTesterAgent3\\workspace\\Alipay_Auto\\Logs\\cfec0c6e_20150519172521", "/logs/");
-        ftp.ftpLogOut();
-    }
 }
 
