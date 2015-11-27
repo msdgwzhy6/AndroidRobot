@@ -476,7 +476,7 @@ public class AndroidRobot {
                 //向手机注入Minicap截图工具
                 String sdk = device.getProperty("ro.build.version.sdk");
                 String abi = device.getProperty("ro.product.cpu.abi");
-                device.pushFile(ClassLoader.getSystemResource("plugins/resources/minicap/bin/" + abi + "/minicap").getPath(), 
+                device.pushFile(ClassLoader.getSystemResource("plugins/resources/minicap/bin/" + abi + "/minicap").getPath(),
                 		"/data/local/tmp/minicap");
                 System.out.println(ClassLoader.getSystemResource("plugins/resources/minicap/shared/android-" + sdk + "/" + abi + "/minicap.so").getPath());
                 device.pushFile(ClassLoader.getSystemResource("plugins/resources/minicap/shared/android-" + sdk + "/" + abi + "/minicap.so").getPath(),
@@ -670,7 +670,7 @@ public class AndroidRobot {
 
         //recorder
         itemRec = new ToolItem(toolBarRecord, SWT.DROP_DOWN);
-        
+
         Image iconRec = new Image(display, ClassLoader.getSystemResource("icons/record.png").getPath());
         itemRec.setImage(iconRec);
         itemRec.setToolTipText("录制");
@@ -828,13 +828,7 @@ public class AndroidRobot {
         CoolItem coolItemPrj = new CoolItem(coolBarPrj, SWT.NONE);
         //ToolBar
         toolBar = new ToolBar(coolBarPrj, SWT.FLAT | SWT.WRAP | SWT.RIGHT);
-        coolItemPrj.setControl(toolBar);
 
-        Control controlPrj = coolItemPrj.getControl();
-        Point ptPrj = controlPrj.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-        ptPrj = coolItemPrj.computeSize(ptPrj.x, ptPrj.y);
-        coolItemPrj.setSize(ptPrj);
-        coolBarPrj.pack();
 
         //apk
         itemSetApk = new ToolItem(toolBar, SWT.PUSH);
@@ -844,8 +838,8 @@ public class AndroidRobot {
         itemSetApk.addListener(SWT.Selection, new Listener() {
             public void handleEvent(Event event) {
                 if (event.detail == 0) {
-                    SetApkWindow newPrj = 
-                    		new SetApkWindow(shell, SWT.CLOSE, PropertiesUtil.getValue(System.getProperty("user.dir") + 
+                    SetApkWindow newPrj =
+                    		new SetApkWindow(shell, SWT.CLOSE, PropertiesUtil.getValue(System.getProperty("user.dir") +
                     		"/system.properties", "aut"));
                     String choice = newPrj.open();
 
@@ -1154,6 +1148,13 @@ public class AndroidRobot {
 //                }
 //            }
 //        });
+        coolItemPrj.setControl(toolBar);
+
+        Control controlPrj = coolItemPrj.getControl();
+        Point ptPrj = controlPrj.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+        ptPrj = coolItemPrj.computeSize(ptPrj.x, ptPrj.y);
+        coolItemPrj.setSize(ptPrj);
+        coolBarPrj.pack();
 
     }
 
@@ -2443,7 +2444,7 @@ public class AndroidRobot {
                         comboSolution.select(j);
 
                         //load project in folder
-                        scriptPath = System.getProperty("user.dir") + 
+                        scriptPath = System.getProperty("user.dir") +
                         		"/workspace/" + comboSolution.getText().trim() + "/Scripts/";
                         loadProjectInTaskTab(scriptPath, comboProject);
 
@@ -2490,7 +2491,7 @@ public class AndroidRobot {
                 try {
                     //Scripts from disk
                 	System.out.println("scriptPath:" + scriptPath + "   " + new File(scriptPath));
-                	
+
                     FileUtility.getScripts(new File(scriptPath), vecBaseScripts);
 
                     //add from task.dat
@@ -3764,7 +3765,7 @@ public class AndroidRobot {
                 projectPath = new File(prjName.substring(0, prjName.lastIndexOf(".androidrobot"))).getCanonicalPath();
 
                 //set path for checkpoint system
-                PropertiesUtil.append(System.getProperty("user.dir") + 
+                PropertiesUtil.append(System.getProperty("user.dir") +
                 		File.separator + "system.properties", "ProjectPath", prjName, "");
 
                 FileUtility.loadLogsByProject(root, display, projectPath);
@@ -4943,7 +4944,7 @@ public class AndroidRobot {
                     listTasks.add(ti.getText(0));
                 }
             }
-           
+
             Vector<Task> tasks = TaskUtil.getCheckedTasks(taskFilePath, listTasks);
             if (tasks.size() <= 0)
                 return false;
@@ -4952,14 +4953,14 @@ public class AndroidRobot {
                 //connect to device
                 if (vecDevices.size() <= 0)
                     return false;
-                String apk = PropertiesUtil.getValue(System.getProperty("user.dir") + 
+                String apk = PropertiesUtil.getValue(System.getProperty("user.dir") +
                 		"/system.properties", "aut");
-                String str_sele = PropertiesUtil.getValue(System.getProperty("user.dir") + 
+                String str_sele = PropertiesUtil.getValue(System.getProperty("user.dir") +
                 		"/system.properties", "isSelendroid");
 
                 if (!str_sele.trim().equals("") && (str_sele.trim().toLowerCase().equals("false") || str_sele.trim().toLowerCase().equals("true")))
                     isSelendroid = Boolean.parseBoolean(str_sele);
-                
+
                 for (int i = 0; i < vecDevices.size(); i++) {
                     AndroidDriver driver = new AndroidDriver(apk, vecDevices.get(i).getSerialNumber(), isSelendroid, projectPath);
                     if (driver.connect()) {
@@ -5051,9 +5052,9 @@ public class AndroidRobot {
      */
     public static void main(String[] args) {
         //Loading Splash windows from start
-        SplashWindow sp = new SplashWindow(System.getProperty("user.dir") + 
-        		File.separator + "splash.jpg");
-        sp.start();
+//        SplashWindow sp = new SplashWindow(System.getProperty("user.dir") +
+//        		File.separator + "splash.jpg");
+//        sp.start();
 
         display = new Display();
         shell = new Shell(display);
@@ -5150,11 +5151,11 @@ public class AndroidRobot {
 
         //load current project
         loadProjects();
-        PropertyConfigurator.configure(System.getProperty("user.dir") + 
-        		"/log4j.properties");
+        PropertyConfigurator.configure(System.getProperty("user.dir") +
+                "/log4j.properties");
         shell.open();
         shell.layout();
-        sp.closeSplashWindow();
+//        sp.closeSplashWindow();
         while (shell != null && !shell.isDisposed()) {
             if (display != null && !display.readAndDispatch()) {
                 display.sleep();
